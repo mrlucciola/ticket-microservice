@@ -1,0 +1,26 @@
+{
+  "name": "@tickets/auth",
+  "version": "0.0.1",
+  "private": true,
+  "main": "dist",
+  "types": "dist",
+  "author": "mrlucciola",
+  "license": "MIT",
+  "config": {
+    "srv_name": "auth"
+  },
+  "packageManager": "yarn@3.5.1",
+  "dependencies": {
+    "axios": "^1.4.0",
+    "body-parser": "^1.20.2",
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "@types/body-parser": "^1",
+    "@types/express": "^4"
+  },
+  "scripts": {
+    "build": "tsc -b",
+    "start": "nodemon --exec ts-node ./src/index.ts"
+  }
+}
