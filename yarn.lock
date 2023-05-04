@@ -563,7 +563,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"husky@npm:^8.0.3":
+"husky@npm:^8.0.0":
   version: 8.0.3
   resolution: "husky@npm:8.0.3"
   bin:
@@ -927,7 +927,7 @@ __metadata:
   resolution: "ticket-microservice@workspace:."
   dependencies:
     "@yarnpkg/sdks": ^3.0.0-rc.43
-    husky: ^8.0.3
+    husky: ^8.0.0
   languageName: unknown
   linkType: soft
 
