@@ -28,7 +28,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         [null, {\
           "packageLocation": "./",\
           "packageDependencies": [\
-            ["@yarnpkg/sdks", "npm:3.0.0-rc.43"]\
+            ["@yarnpkg/sdks", "npm:3.0.0-rc.43"],\
+            ["husky", "npm:8.0.3"]\
           ],\
           "linkType": "SOFT"\
         }]\
@@ -682,6 +683,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["husky", [\
+        ["npm:8.0.3", {\
+          "packageLocation": "./.yarn/cache/husky-npm-8.0.3-b0b59c5127-837bc7e441.zip/node_modules/husky/",\
+          "packageDependencies": [\
+            ["husky", "npm:8.0.3"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["ignore", [\
         ["npm:5.2.4", {\
           "packageLocation": "./.yarn/cache/ignore-npm-5.2.4-fbe6e989e5-3d4c309c60.zip/node_modules/ignore/",\
@@ -1096,7 +1106,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./",\
           "packageDependencies": [\
             ["ticket-microservice", "workspace:."],\
-            ["@yarnpkg/sdks", "npm:3.0.0-rc.43"]\
+            ["@yarnpkg/sdks", "npm:3.0.0-rc.43"],\
+            ["husky", "npm:8.0.3"]\
           ],\
           "linkType": "SOFT"\
         }]\

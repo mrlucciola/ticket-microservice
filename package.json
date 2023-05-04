@@ -1,11 +1,16 @@
 {
   "name": "ticket-microservice",
+  "private": true,
   "packageManager": "yarn@3.5.1",
   "engines": {
     "node": "^18.15.0",
     "yarn": "^3.5.1"
   },
   "devDependencies": {
-    "@yarnpkg/sdks": "^3.0.0-rc.43"
+    "@yarnpkg/sdks": "^3.0.0-rc.43",
+    "husky": "^8.0.3"
+  },
+  "scripts": {
+    "postinstall": "husky install"
   }
 }
