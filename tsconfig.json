@@ -1,0 +1,6 @@
+{
+  "references": [{ "path": "./services/auth" }],
+  "files": [],
+  "include": [],
+  "exclude": ["**/node_modules", "services/**/tests/**", "services/**/dist/**"]
+}
