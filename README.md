@@ -2,6 +2,44 @@
 
 Simple microservices demo via a full stack ticketing application
 
+## Tools
+
+Frontend: React, rendered server-side via Next.js
+API: Next.js
+Datastore: MongoDB
+
+## Services
+
+The 5 services in this application are:
+
+- Auth - User authentication: login/logout/registration
+- Tickets - Create/edit tickets
+- Orders - Create/edit orders
+- Expiration - Order lifecycle - closes orders after 15 minutes
+- Payments - Credit card payments. Closes orders on success/failure.
+
+## Resources
+
+- User
+  - email: str
+  - pw: str
+- Ticket
+  - title: str
+  - price: str
+  - userId: User.id
+  - orderId: Order.id
+- Order
+  - userId: User.id
+  - ticketId: Ticket.id
+  - status: "Created" | "AwaitingPayment" | "Cancelled" | "Completed"
+  - dtExpiry: Date
+- Charge
+  - orderId: Order.id
+  - status: "Created" | "Failed" | "Completed"
+  - amount: number
+  - stripeId: str
+  - stripeRefundId: str
+
 ## Repo initialization:
 
 ### 1. Set up `yarn`
