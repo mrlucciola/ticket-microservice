@@ -11,8 +11,18 @@
 # !.yarn/cache
 .pnp.*
 
+# logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
 # python
 **/__pycache__
+
+# ts
+**/dist/
+**/dist.cache/
+**/*tsconfig.tsbuildinfo
 
 # misc
 **/*DS_Store
