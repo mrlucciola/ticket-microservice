@@ -14,10 +14,10 @@ print("commit-msg:",
     f"\n\tBranch: {branch}",
 )
 
-issue_number = branch.split('-')[0]
+# issue_number = branch.split('-')[0]
 
-try:
-    issue_number = int(issue_number)
-except ValueError:
-    print(f"commit-msg: Branch '{branch}' does not start with an issue number")
-    sys.exit(1)
+# try:
+#     issue_number = int(issue_number)
+# except ValueError:
+#     print(f"commit-msg: Branch '{branch}' does not start with an issue number")
+#     sys.exit(1)

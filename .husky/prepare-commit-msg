@@ -15,25 +15,25 @@ if len(sys.argv) > 3:
 # Figure out which branch we're on
 branch = check_output(['git', 'symbolic-ref', '--short', 'HEAD']).strip().decode('utf-8')
 
-print("prepare-commit-msg:",
-    f"\n\tFile: {commit_msg_filepath}",
-    f"\n\tType: {commit_type}",
-    f"\n\tHash: {commit_hash}",
-    f"\n\tBranch: {branch}",
-)
+# print("prepare-commit-msg:",
+#     f"\n\tFile: {commit_msg_filepath}",
+#     f"\n\tType: {commit_type}",
+#     f"\n\tHash: {commit_hash}",
+#     f"\n\tBranch: {branch}",
+# )
 
 
-with open(commit_msg_filepath, 'r+') as f:
-    commit_msg = f.read()
-    f.seek(0, 0)
+# with open(commit_msg_filepath, 'r+') as f:
+#     commit_msg = f.read()
+#     f.seek(0, 0)
 
-    issue_number = branch.split('-')[0]
-    msg = ""
-    try:
-        issue_number = int(issue_number)
-        msg = f"#{issue_number}: {commit_msg}"
-    except ValueError:
-        print(f"prepare-commit-msg: Branch '{branch}' does not start with an issue number")
-        msg = f"HOTFIX- {commit_msg}"
-    f.write(msg)
-    exit(0)
+#     issue_number = branch.split('-')[0]
+#     msg = ""
+#     try:
+#         issue_number = int(issue_number)
+#         msg = f"#{issue_number}: {commit_msg}"
+#     except ValueError:
+#         print(f"prepare-commit-msg: Branch '{branch}' does not start with an issue number")
+#         msg = f"HOTFIX- {commit_msg}"
+#     f.write(msg)
+#     exit(0)
