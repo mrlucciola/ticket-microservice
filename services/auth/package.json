@@ -7,7 +7,8 @@
   "author": "mrlucciola",
   "license": "MIT",
   "config": {
-    "srv_name": "auth"
+    "srv_name": "auth",
+    "author": "mrlucciola"
   },
   "packageManager": "yarn@3.5.1",
   "dependencies": {
@@ -22,6 +23,7 @@
   },
   "scripts": {
     "build": "tsc -b",
-    "start": "nodemon --exec ts-node ./src/index.ts"
+    "start": "nodemon --exec ts-node ./src/index.ts",
+    "d:img": "docker build -t $npm_package_config_author/$npm_package_config_srv_name:latest -t $npm_package_config_author/$npm_package_config_srv_name:$npm_package_version ../.. --file Dockerfile"
   }
 }
