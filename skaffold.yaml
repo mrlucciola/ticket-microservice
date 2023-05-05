@@ -1,0 +1,21 @@
+apiVersion: skaffold/v4beta4
+kind: Config
+build:
+  artifacts:
+    - image: mrlucciola/auth
+      context: ./
+      sync:
+        manual:
+          - src: ./services/auth/src/**/*.ts
+            dest: .
+      docker:
+        dockerfile: ./services/auth/Dockerfile
+  local:
+    push: false
+manifests:
+  rawYaml:
+    - ./k8s/*
+    - ./client/k8s/*
+    - ./services/*/k8s/*
+deploy:
+  kubectl: {}
