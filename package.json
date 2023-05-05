@@ -4,7 +4,7 @@
   "private": true,
   "packageManager": "yarn@3.5.1",
   "engines": {
-    "node": "^18.15.0",
+    "node": ">=18.15.0",
     "yarn": "^3.5.1"
   },
   "devDependencies": {
@@ -25,6 +25,7 @@
     "build": "tsc -b tsconfig.json",
     "rebuild:ts": "yarn remove:ts; yarn build",
     "remove:ts": "yarn rm-services:ts",
-    "rm-services:ts": "cd services && rm -rf */dist*/"
+    "rm-services:ts": "cd services && rm -rf */dist*/",
+    "serve": "skaffold dev"
   }
 }
