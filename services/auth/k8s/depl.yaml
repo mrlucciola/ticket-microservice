@@ -14,4 +14,17 @@ spec:
     spec:
       containers:
         - name: auth
-          image: mrlucciola/auth
+          image: mrlucciola/auth:0.0.1
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: auth-clusterip-srv
+spec:
+  selector:
+    app: auth
+  ports:
+    - name: auth
+      protocol: TCP
+      port: 8080
+      targetPort: 8080
