@@ -20,6 +20,10 @@
     "services/*"
   ],
   "scripts": {
-    "postinstall": "husky install"
+    "postinstall": "husky install",
+    "build": "tsc -b tsconfig.json",
+    "rebuild:ts": "yarn remove:ts; yarn build",
+    "remove:ts": "yarn rm-services:ts",
+    "rm-services:ts": "cd services && rm -rf */dist*/"
   }
 }
