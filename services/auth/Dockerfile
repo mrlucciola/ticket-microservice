@@ -1,5 +1,5 @@
 # CONTEXT IS AT ROOT OF PROJECT
-FROM node:alpine
+FROM node:alpine3.17
 
 ARG SRV=auth
 ARG SRV_PATH=services/$SRV

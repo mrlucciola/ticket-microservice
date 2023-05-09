@@ -14,7 +14,8 @@ spec:
     spec:
       containers:
         - name: auth
-          image: mrlucciola/auth:0.0.1
+          image: mrlucciola/auth
+
 ---
 apiVersion: v1
 kind: Service
