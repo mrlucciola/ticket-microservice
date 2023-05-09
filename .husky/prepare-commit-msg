@@ -22,7 +22,7 @@ branch = check_output(['git', 'symbolic-ref', '--short', 'HEAD']).strip().decode
 #     f"\n\tBranch: {branch}",
 # )
 
-
+# @todo add logic to check if ticket/hotfix prefix exists, to avoid duplication
 # with open(commit_msg_filepath, 'r+') as f:
 #     commit_msg = f.read()
 #     f.seek(0, 0)
