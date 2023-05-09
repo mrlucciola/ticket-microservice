@@ -1,6 +1,9 @@
 import express from "express";
 import bodyParser from "body-parser";
+// local
+import routesApi from "./routes/api";
 
+// constants
 export const serviceName = "auth";
 export const PORT_AUTH = 8080;
 
@@ -11,6 +14,7 @@ const app = express();
 app.use(bodyParser.json());
 
 // set routes
+app.use("/api", routesApi);
 
 // start server
 app.listen(PORT_AUTH, () => {
