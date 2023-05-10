@@ -14,7 +14,7 @@ const app = express();
 app.use(bodyParser.json());
 
 // set routes
-app.use("/", routes);
+app.use(routes);
 
 // start server
 app.listen(PORT_AUTH, () => {
