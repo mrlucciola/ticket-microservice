@@ -14,6 +14,7 @@ build:
     push: false
 manifests:
   rawYaml:
+    - ./k8s/*
     - ./services/*/k8s/*
 deploy:
   kubectl: {}
