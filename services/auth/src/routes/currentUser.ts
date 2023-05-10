@@ -10,4 +10,4 @@ router.route("/users/currentuser").get((_req, res, next) => {
   next();
 });
 
-export { router as routerUser };
+export { router as routerCurrentUser };
