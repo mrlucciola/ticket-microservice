@@ -1,5 +1,7 @@
 import { Request, Response, Router } from "express";
 import { body, validationResult } from "express-validator";
+import { ReqValidationError } from "../errors/reqValidationError";
+import { DatabaseConnectionError } from "../errors/databaseConnectionError";
 
 const router = Router();
 
@@ -14,15 +16,15 @@ router
     (req: Request, res: Response, _next) => {
       // validate input
       const errors = validationResult(req);
-      if (!errors.isEmpty()) {
-        res.status(400).send(errors.array());
-      } else {
-        const { email, password } = req.body;
+      if (!errors.isEmpty()) throw new ReqValidationError(errors.array());
 
-        res
-          .status(200)
-          .send(`Req register OK: {email: ${email}, password: ${password}}`);
-      }
+      const { email, password } = req.body;
+
+      throw new DatabaseConnectionError();
+
+      // res
+      //   .status(200)
+      //   .send(`Req register OK: {email: ${email}, password: ${password}}`);
     }
   );
 

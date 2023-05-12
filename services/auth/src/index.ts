@@ -13,10 +13,12 @@ const app = express();
 
 // add middlewares
 app.use(bodyParser.json());
-app.use(errorHandler);
 
 // set routes
 app.use(routes);
+
+// set error middleware
+app.use(errorHandler);
 
 // start server
 app.listen(PORT_AUTH, () => {
