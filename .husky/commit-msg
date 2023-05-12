@@ -7,12 +7,12 @@ from subprocess import check_output
 commit_msg_filepath = sys.argv[1]
 
 # Figure out which branch we're on
-branch = check_output(['git', 'symbolic-ref', '--short', 'HEAD']).strip().decode('utf-8')
+# branch = check_output(['git', 'symbolic-ref', '--short', 'HEAD']).strip().decode('utf-8')
 
-print("commit-msg:",
-    f"\n\tFile: {commit_msg_filepath}",
-    f"\n\tBranch: {branch}",
-)
+# print("commit-msg:",
+#     f"\n\tFile: {commit_msg_filepath}",
+#     f"\n\tBranch: {branch}",
+# )
 
 # issue_number = branch.split('-')[0]
 

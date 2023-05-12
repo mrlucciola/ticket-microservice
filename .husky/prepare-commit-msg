@@ -13,7 +13,7 @@ if len(sys.argv) > 3:
     commit_hash = sys.argv[3]
 
 # Figure out which branch we're on
-branch = check_output(['git', 'symbolic-ref', '--short', 'HEAD']).strip().decode('utf-8')
+# branch = check_output(['git', 'symbolic-ref', '--short', 'HEAD']).strip().decode('utf-8')
 
 # print("prepare-commit-msg:",
 #     f"\n\tFile: {commit_msg_filepath}",
