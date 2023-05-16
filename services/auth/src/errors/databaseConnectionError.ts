@@ -1,10 +1,9 @@
-export class DatabaseConnectionError extends Error {
+import { EventError } from ".";
+
+export class DatabaseConnectionError extends EventError {
   reason = "Error connecting to database";
 
   constructor() {
     super();
-
-    // for extending builtin
-    Object.setPrototypeOf(this, DatabaseConnectionError.prototype);
   }
 }
