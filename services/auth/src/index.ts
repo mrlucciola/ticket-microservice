@@ -4,6 +4,7 @@ import bodyParser from "body-parser";
 import routes from "./routes";
 import { errorHandler } from "./middlewares/errorHandler";
 import { NotFoundError } from "./errors/notFoundError";
+import mongoose from "mongoose";
 
 // constants
 export const serviceName = "auth";
@@ -24,7 +25,19 @@ app.all("*", async (_req, res, next) => {
 // set error middleware
 app.use(errorHandler);
 
-// start server
-app.listen(PORT_AUTH, () => {
-  console.log(`Server listening at http://localhost:${PORT_AUTH}`);
-});
+const start = async () => {
+  // init connection with db
+  try {
+    await mongoose.connect("mongodb://auth-mongo-srv:27017/auth");
+    console.log("Connected to mongodb!");
+  } catch (err) {
+    console.error(err);
+  }
+
+  // start server
+  app.listen(PORT_AUTH, () => {
+    console.log(`Auth service - http://localhost:${PORT_AUTH}`);
+  });
+};
+
+start();
