@@ -1,0 +1,20 @@
+@startuml
+
+actor       "React App" as client
+participant "Auth Service" as auth
+database    db
+
+group Account Registration Request
+    client -> auth : Send signup request
+    activate auth
+
+    auth -> db : Check if email/acct exists\n(send error if not)
+    auth -> auth : Hash password (no plaintext stored)
+    auth -> db : Create new User in DB
+    auth -> auth : Log user in. Create and respond\nwith session obj. (cookie/jwt/etc)
+
+    client <- auth : Send response
+    deactivate auth
+end
+
+@enduml
