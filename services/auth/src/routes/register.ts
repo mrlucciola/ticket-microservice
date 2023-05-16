@@ -13,14 +13,14 @@ router
       .trim()
       .isLength({ min: 4, max: 20 })
       .withMessage("Please use valid password length (min: 4, max: 20)."),
-    (req: Request, _res: Response, _next) => {
+    (req: Request, res: Response, _next) => {
       // validate input
       const errors = validationResult(req);
-      if (!errors.isEmpty()) throw new ReqValidationError(errors.array());
+      if (!errors.isEmpty()) throw new ReqValidationError(res, errors.array());
 
       const { email, password } = req.body;
 
-      throw new DatabaseConnectionError();
+      throw new DatabaseConnectionError(res);
 
       // res
       //   .status(200)
