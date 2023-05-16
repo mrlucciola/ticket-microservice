@@ -17,6 +17,7 @@ export const errorHandler = (
     const formattedErrors = [];
     for (let idx = 0; idx < err.errors.length; idx++) {
       const subErr = err.errors[idx];
+      console.log('\n\n\nsub error:\n',subErr,'\n\n')
       if (subErr.type === "field")
         formattedErrors.push({ message: subErr.msg, field: subErr.path });
     }
@@ -24,5 +25,9 @@ export const errorHandler = (
   } else if (err instanceof DatabaseConnectionError) {
     console.log("DB error occured");
     res.status(400).send({ msg: err.message });
-  } else console.log("unhandled error:", err);
+  } else {
+    console.log("unhandled error:", err);
+    console.log("unhandled error msg:", err.message);
+    res.status(400).send({ msg: err.message });
+  };
 };
