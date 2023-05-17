@@ -1,0 +1,21 @@
+@startuml
+
+rectangle "Mongoose User Model" as model
+database "MongoDB" {
+    package "User Collection" as uc {
+        ["User 1"] as u1
+        ["User 2"] as u2
+        ["User 3"] as u3
+        ["User 4"] as u4
+        u1-[hidden]r-u2
+        u1-[hidden]d-u3
+        u2-[hidden]d-u4
+        u3-[hidden]r-u4
+    }
+}
+rectangle "Mongoose User Document" as doc
+
+u2-doc
+uc-l-model
+
+@enduml
