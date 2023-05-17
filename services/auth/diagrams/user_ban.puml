@@ -1,0 +1,15 @@
+@startuml
+autonumber
+
+actor "Admin User" as admin
+participant "Auth. Service" as auth
+database "Auth DB" as authdb
+participant "Orders Service" as ords
+queue "Event Bus" as events
+
+admin -> auth : **Request ban on user**\n{userId: "abc123"}
+auth -> authdb : **Update database entry for user**\n{userId: "abc123", hasAccess: false } 
+auth -> events : **Emit ""UserBanned"" event**\n{userId: "abc123"} 
+ords <- events : **Receive ""UserBanned"" event**
+
+@enduml

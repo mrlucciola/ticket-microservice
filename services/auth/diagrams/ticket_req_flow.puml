@@ -1,0 +1,33 @@
+@startuml
+autonumber
+
+actor User as user
+participant "Orders Service" as ords
+
+
+group Ticket Purchase Request
+    user -> ords : **Req. Payload:**\n{ ticketId: "..." }
+    group Ticket Purchase Logic
+
+        alt Auth. Validation Logic
+        else #Pink Token Expired: token_age > TTL (15 min.)
+            user <-- ords : Send ExpiredError back to user
+            create participant "Auth. Service" as auth
+            user --> auth : Request token refresh
+            ' ?-> auth : **Refresh token**\na)\nb) User requests ;
+        else #Pink User is unauthorized or not authenticated
+        end
+    end
+    user <- ords : JWT/Cookie/etc.\nwith **15 minute TTL**
+end
+
+' group Login request
+'     user -> auth : **Req. Payload:**\n{ email: "...", pwd: "..."}
+'     group Login logic
+'         auth -> auth : Validate email
+'         auth -> auth : Generate session token
+'     end
+'     user <- auth : JWT/Cookie/etc.\nwith **15 minute TTL**
+' end
+
+@enduml
