@@ -1,0 +1,16 @@
+@startuml
+autonumber
+
+actor User as user
+participant "Auth Service" as auth
+
+group Login request
+    user -> auth : **Req. Payload:**\n{ email: "...", pwd: "..."}
+    group Login logic
+        auth -> auth : Validate email
+        auth -> auth : Generate session token
+    end
+    user <- auth : JWT/Cookie/etc.\nwith **15 minute TTL**
+end
+
+@enduml
