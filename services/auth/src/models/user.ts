@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { Password } from "../interfaces/password";
 // interface, describes props for new user
 interface UserAttrs {
   email: string;
@@ -21,6 +22,16 @@ const userSchema = new mongoose.Schema<UserAttrs>({
   },
 });
 
-export const User = mongoose.model<UserDoc, UserModel>("User", userSchema);
 userSchema.statics.build = (attrs: UserAttrs) => new User(attrs);
-export const buildUser = (attrs: UserAttrs) => new User(attrs);
+userSchema.pre("save", async function (done) {
+  if (this.isModified("password")) {
+    // get password from the document
+    const hashed = await Password.toHash(this.get("password"));
+    // update the pwd
+    this.set("password", hashed);
+    // close
+    done();
+  }
+});
+
+export const User = mongoose.model<UserDoc, UserModel>("User", userSchema);
