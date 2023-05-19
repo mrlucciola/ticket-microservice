@@ -5,6 +5,7 @@ import routes from "./routes";
 import { errorHandler } from "./middlewares/errorHandler";
 import { NotFoundError } from "./errors/notFoundError";
 import mongoose from "mongoose";
+import cookieSession from "cookie-session";
 
 // constants
 export const serviceName = "auth";
@@ -12,9 +13,19 @@ export const PORT_AUTH = 8080;
 
 // init
 const app = express();
+// allow https k8s nginx proxy
+app.set("trust proxy", true);
 
 // add middlewares
 app.use(bodyParser.json());
+app.use(
+  cookieSession({
+    // disable encryption - we dont use encryption
+    signed: false,
+    // require that cookies are used over https
+    secure: true,
+  })
+);
 
 // set routes
 app.use(routes);
