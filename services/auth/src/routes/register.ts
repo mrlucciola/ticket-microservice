@@ -1,6 +1,7 @@
 import { Request, Response, Router } from "express";
 import { body, validationResult } from "express-validator";
 import jwt from "jsonwebtoken";
+// local
 import { ReqValidationError } from "../errors/reqValidationError";
 import { DatabaseConnectionError } from "../errors/databaseConnectionError";
 import { User } from "../models/user";
@@ -42,7 +43,7 @@ router.post(
           id: user.id,
           email: user.email,
         },
-        "asdf"
+        "asdfa"
       );
       // store jwt on session
       req.session = { jwt: jwtUser };
