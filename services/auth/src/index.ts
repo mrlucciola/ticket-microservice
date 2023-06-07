@@ -1,11 +1,12 @@
 import express from "express";
 import bodyParser from "body-parser";
+import mongoose from "mongoose";
+import cookieSession from "cookie-session";
 // local
 import routes from "./routes";
 import { errorHandler } from "./middlewares/errorHandler";
 import { NotFoundError } from "./errors/notFoundError";
-import mongoose from "mongoose";
-import cookieSession from "cookie-session";
+import { CustomError } from "./errors/customError";
 
 // constants
 export const serviceName = "auth";
@@ -37,6 +38,9 @@ app.all("*", async (_req, res, next) => {
 app.use(errorHandler);
 
 const start = async () => {
+  if (!process.env.JWT_KEY)
+    throw new Error(`"JWD_KEY" env var not set for service: ${serviceName}`);
+
   // init connection with db
   try {
     await mongoose.connect("mongodb://auth-mongo-srv:27017/auth");
