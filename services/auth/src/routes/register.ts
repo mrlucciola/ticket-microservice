@@ -19,7 +19,7 @@ router.post(
     // validate input
     const errors = validationResult(req);
 
-    // handle errors
+    // handle validation errors
     if (!errors.isEmpty())
       return next(new ReqValidationError(res, errors.array()));
 

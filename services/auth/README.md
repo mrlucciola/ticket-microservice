@@ -17,14 +17,34 @@ These requirements suggest that JWT (**J**SON **W**eb **T**oken)
 #### Sending a request
 
 ```sh
+########################## REGISTER (below) ##########################
 curl -k -d '{"email":"test@mail.com", "password":"testpassword"}' \
   -H "Content-Type: application/json" \
   -X POST https://ticketing.docker/api/users/register \
   -c ./_hidden/hidden-cookie.txt
-curl -k -d '{"email":"testacct2@mailprovider.net", "password":"testpassword"}' \
+
+########################## REGISTER (above) ##########################
+
+########################### LOGIN (below) ############################
+# pass
+curl -k -d '{"email":"test@mail.com", "password":"testpassword"}' \
   -H "Content-Type: application/json" \
-  -X POST https://ticketing.docker/api/users/register \
+  -X POST https://ticketing.docker/api/users/login \
   -c ./_hidden/hidden-cookie.txt
+
+# fail - validation - empty password
+curl -k -d '{"email":"test@mail.com", "password":""}' \
+  -H "Content-Type: application/json" \
+  -X POST https://ticketing.docker/api/users/login \
+  -c ./_hidden/hidden-cookie.txt
+
+# fail - validation - invalid email
+curl -k -d '{"email":"not_an_email", "password":"testpassword"}' \
+  -H "Content-Type: application/json" \
+  -X POST https://ticketing.docker/api/users/login \
+  -c ./_hidden/hidden-cookie.txt
+
+########################### LOGIN (above) ############################
 ```
 
 ## ISSUES
