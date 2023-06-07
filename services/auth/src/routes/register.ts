@@ -5,6 +5,7 @@ import jwt from "jsonwebtoken";
 import { ReqValidationError } from "../errors/reqValidationError";
 import { DatabaseConnectionError } from "../errors/databaseConnectionError";
 import { User } from "../models/user";
+import { CustomError } from "../errors/customError";
 
 const router = Router();
 
@@ -27,42 +28,33 @@ router.post(
 
     const existingUser = await User.find({ email: { $eq: email } });
 
-    // @todo `return` incurs overhead
     // @todo create a custom error type for existing user
     if (existingUser.length > 0) {
-      next(new Error(`user "${email}" already exists`));
-      return;
+      next(new CustomError(res, `user "${email}" already exists`));
+    } else {
+      try {
+        // create user instance
+        const user = User.build({ email, password });
+        // save to database
+        await user.save();
+
+        // generate jwt
+        const jwtUser: string = jwt.sign(
+          {
+            id: user.id,
+            email: user.email,
+          },
+          "asdfa"
+        );
+        // store jwt on session
+        req.session = { jwt: jwtUser };
+
+        res.status(201).send(user);
+      } catch (error) {
+        // @todo add custom error
+        return next(error);
+      }
     }
-
-    try {
-      // create user instance
-      const user = User.build({ email, password });
-      // save to database
-      await user.save();
-
-      // generate jwt
-      const jwtUser: string = jwt.sign(
-        {
-          id: user.id,
-          email: user.email,
-        },
-        "asdfa"
-      );
-      // store jwt on session
-      req.session = { jwt: jwtUser };
-
-      res.status(201).send(user);
-    } catch (error) {
-      // @todo add custom error
-      return next(error);
-    }
-
-    // @todo handle db connection error
-    // next(new DatabaseConnectionError(res));
-
-    // res
-    //   .status(200)
-    //   .send(`Req register OK: {email: ${email}, password: ${password}}`);
   }
 );
 

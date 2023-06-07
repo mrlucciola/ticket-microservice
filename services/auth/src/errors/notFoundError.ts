@@ -3,7 +3,7 @@ import { EventError } from ".";
 
 export class NotFoundError extends EventError {
   status = 404;
-  message: string = "Not found";
+  message = "Not found";
 
   constructor(res: Response) {
     super(res);
