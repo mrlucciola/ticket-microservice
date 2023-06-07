@@ -20,11 +20,11 @@ These requirements suggest that JWT (**J**SON **W**eb **T**oken)
 curl -k -d '{"email":"test@mail.com", "password":"testpassword"}' \
   -H "Content-Type: application/json" \
   -X POST https://ticketing.docker/api/users/register \
-  -c ./hidden-cookie.txt
+  -c ./_hidden/hidden-cookie.txt
 curl -k -d '{"email":"testacct2@mailprovider.net", "password":"testpassword"}' \
   -H "Content-Type: application/json" \
   -X POST https://ticketing.docker/api/users/register \
-  -c ./hidden-cookie.txt
+  -c ./_hidden/hidden-cookie.txt
 ```
 
 ## ISSUES
