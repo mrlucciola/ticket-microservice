@@ -19,9 +19,8 @@ router.post(
   async (req: Request, res: Response, next) => {
     const { email, password } = req.body;
 
-    const existingUser = await User.find({ email: { $eq: email } });
-
     // handle error: user already registered/exists
+    const existingUser = await User.find({ email: { $eq: email } });
     if (existingUser.length > 0)
       return next(new CustomError(res, `user "${email}" already exists`));
 
