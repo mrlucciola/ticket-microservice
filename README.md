@@ -80,6 +80,9 @@ kubectl create secret generic <name_of_secret> --from-literal=<key_str=value_str
 
 # look up k8s secrets with command:
 kubectl get secrets
+
+# find pod issues r.e. env var (secret-related) with command:
+kubectl describe pod <name_of_pod>
 ```
 
 ## ISSUES
