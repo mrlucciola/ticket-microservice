@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import { Password } from "../interfaces/password";
+
 // interface, describes props for new user
 interface UserAttrs {
   email: string;
@@ -11,16 +12,31 @@ interface UserModel extends mongoose.Model<UserDoc> {
 }
 
 // create schema
-const userSchema = new mongoose.Schema<UserAttrs>({
-  email: {
-    type: String,
-    required: true,
+const userSchema = new mongoose.Schema<UserAttrs>(
+  {
+    email: {
+      type: String,
+      required: true,
+    },
+    password: {
+      type: String,
+      required: true,
+    },
   },
-  password: {
-    type: String,
-    required: true,
-  },
-});
+  {
+    toJSON: {
+      transform(_doc, ret) {
+        // map _id to id for response data
+        ret.id = ret._id;
+        delete ret._id;
+        // remove password from response data
+        delete ret.password;
+        // remove version key from response data
+        delete ret.__v;
+      },
+    },
+  }
+);
 
 userSchema.statics.build = (attrs: UserAttrs) => new User(attrs);
 userSchema.pre("save", async function (done) {
