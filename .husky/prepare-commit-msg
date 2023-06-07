@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
-import sys, os, re
-from subprocess import check_output
+import sys
+from fxns import get_branch_name
 
 # Collect the parameters
 commit_msg_filepath = sys.argv[1]
@@ -13,27 +13,27 @@ if len(sys.argv) > 3:
     commit_hash = sys.argv[3]
 
 # Figure out which branch we're on
-# branch = check_output(['git', 'symbolic-ref', '--short', 'HEAD']).strip().decode('utf-8')
+branch_name = get_branch_name()
 
-# print("prepare-commit-msg:",
-#     f"\n\tFile: {commit_msg_filepath}",
-#     f"\n\tType: {commit_type}",
-#     f"\n\tHash: {commit_hash}",
-#     f"\n\tBranch: {branch}",
-# )
+def update_commit_msg_file(commit_msg_filepath, issue_number):
+    with open(commit_msg_filepath, 'r+') as f:
+        existing_commit_msg = f.read()
 
-# @todo add logic to check if ticket/hotfix prefix exists, to avoid duplication
-# with open(commit_msg_filepath, 'r+') as f:
-#     commit_msg = f.read()
-#     f.seek(0, 0)
+        # check if issue number is included in the commit title
+        if existing_commit_msg[0] != '(':
+            msg = f"({issue_number}) {existing_commit_msg}"
+            f.seek(0, 0)
+            f.write(msg)
+            f.close()
 
-#     issue_number = branch.split('-')[0]
-#     msg = ""
-#     try:
-#         issue_number = int(issue_number)
-#         msg = f"#{issue_number}: {commit_msg}"
-#     except ValueError:
-#         print(f"prepare-commit-msg: Branch '{branch}' does not start with an issue number")
-#         msg = f"HOTFIX- {commit_msg}"
-#     f.write(msg)
-#     exit(0)
+# try to get the issue number from the branch name
+#   - if exists, use issue number from branch name
+#   - if not, use default "000" issue number
+issue_number_str = branch_name.split('-')[0]
+try:
+    issue_number = int(issue_number_str)
+    update_commit_msg_file(commit_msg_filepath, issue_number)
+
+except (IndexError, ValueError):
+    issue_number = "000"
+    update_commit_msg_file(commit_msg_filepath, issue_number)
