@@ -1,0 +1,22 @@
+@startuml login flow
+
+autonumber
+
+actor       "React App" as client
+participant "Auth Service" as auth
+database    "MongoDB" as mongo
+
+group Account Registration Request
+    client -> auth : Send login request\n**Req. Payload:**\n{ email, password }
+
+    activate auth
+    auth -> db : Check if email/acct exists\n(send error if not)
+    auth -> auth : Compare password provided with password stored in db
+    auth -> db : Create new User in DB
+    auth -> auth : Log user in. Create session\nobj. (cookie/jwt/etc)
+
+    client <- auth: Send response data\nwith session obj. (cookie/jwt/etc)
+    deactivate auth
+end
+
+@enduml
