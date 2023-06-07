@@ -3,9 +3,8 @@ import { body, validationResult } from "express-validator";
 import jwt from "jsonwebtoken";
 // local
 import { ReqValidationError } from "../errors/reqValidationError";
-import { DatabaseConnectionError } from "../errors/databaseConnectionError";
-import { User } from "../models/user";
 import { CustomError } from "../errors/customError";
+import { User } from "../models/user";
 
 const router = Router();
 
@@ -19,41 +18,41 @@ router.post(
   async (req: Request, res: Response, next) => {
     // validate input
     const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      // this `return` incurs overhead
+
+    // handle errors
+    if (!errors.isEmpty())
       return next(new ReqValidationError(res, errors.array()));
-    }
 
     const { email, password } = req.body;
 
     const existingUser = await User.find({ email: { $eq: email } });
 
-    // @todo create a custom error type for existing user
-    if (existingUser.length > 0) {
-      next(new CustomError(res, `user "${email}" already exists`));
-    } else {
-      try {
-        // create user instance
-        const user = User.build({ email, password });
-        // save to database
-        await user.save();
+    // handle errors
+    if (existingUser.length > 0)
+      return next(new CustomError(res, `user "${email}" already exists`));
 
-        // generate jwt
-        const jwtUser: string = jwt.sign(
-          {
-            id: user.id,
-            email: user.email,
-          },
-          "asdfa"
-        );
-        // store jwt on session
-        req.session = { jwt: jwtUser };
+    try {
+      // create user instance
+      const user = User.build({ email, password });
 
-        res.status(201).send(user);
-      } catch (error) {
-        // @todo add custom error
-        return next(error);
-      }
+      // save to database
+      await user.save();
+
+      // generate jwt
+      const jwtUser: string = jwt.sign(
+        {
+          id: user.id,
+          email: user.email,
+        },
+        process.env.JWT_KEY!
+      );
+      // store jwt on session
+      req.session = { jwt: jwtUser };
+
+      res.status(201).send(user);
+    } catch (error) {
+      // @todo add custom error
+      return next(error);
     }
   }
 );
