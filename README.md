@@ -72,4 +72,14 @@ npx husky install
 npm pkg set scripts.prepare="husky install"
 ```
 
+### 3. Create k8s Secret:
+
+```sh
+# create secret imperatively with command:
+kubectl create secret generic <name_of_secret> --from-literal=<key_str=value_str>
+
+# look up k8s secrets with command:
+kubectl get secrets
+```
+
 ## ISSUES
