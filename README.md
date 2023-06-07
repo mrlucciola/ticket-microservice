@@ -40,7 +40,14 @@ The 5 services in this application are:
   - stripeId: str
   - stripeRefundId: str
 
-## Repo initialization:
+## Repo Initialization:
+
+1. Install Docker Desktop
+1. Enable Kubernetes (k8s) through Docker
+1. Install Kubernetes Ingress-Nginx
+1. Install Skaffold (from Google)
+
+## Repo Setup:
 
 ### 1. Set up `yarn`
 
@@ -64,3 +71,5 @@ npx husky install
 # auto enable hooks after install
 npm pkg set scripts.prepare="husky install"
 ```
+
+## ISSUES
