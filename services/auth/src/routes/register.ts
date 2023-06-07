@@ -25,11 +25,14 @@ router.post(
 
     const { email, password } = req.body;
 
-    const existingUser = await User.findOne();
+    const existingUser = await User.find({ email: { $eq: email } });
 
     // @todo `return` incurs overhead
     // @todo create a custom error type for existing user
-    if (existingUser) return next(new Error(`user "${email}" already exists`));
+    if (existingUser.length > 0) {
+      next(new Error(`user "${email}" already exists`));
+      return;
+    }
 
     try {
       // create user instance
@@ -55,7 +58,7 @@ router.post(
     }
 
     // @todo handle db connection error
-    next(new DatabaseConnectionError(res));
+    // next(new DatabaseConnectionError(res));
 
     // res
     //   .status(200)
