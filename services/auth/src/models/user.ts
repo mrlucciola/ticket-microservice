@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import { Password } from "../interfaces/password";
 
 // interface, describes props for new user
-interface UserAttrs {
+export interface UserAttrs {
   email: string;
   password: string;
 }
