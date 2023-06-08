@@ -1,10 +1,10 @@
 import { Request, Response, Router } from "express";
-import { body, validationResult } from "express-validator";
+import { body } from "express-validator";
 import jwt from "jsonwebtoken";
 // local
-import { ReqValidationError } from "../errors/reqValidationError";
 import { CustomError } from "../errors/customError";
 import { User } from "../models/user";
+import { validateRequest } from "../middlewares/validateRequest";
 
 const router = Router();
 
@@ -15,19 +15,12 @@ router.post(
     .trim()
     .isLength({ min: 4, max: 20 })
     .withMessage("Please use valid password length (min: 4, max: 20)."),
+  validateRequest,
   async (req: Request, res: Response, next) => {
-    // validate input
-    const errors = validationResult(req);
-
-    // handle errors
-    if (!errors.isEmpty())
-      return next(new ReqValidationError(res, errors.array()));
-
     const { email, password } = req.body;
 
+    // handle error: user already registered/exists
     const existingUser = await User.find({ email: { $eq: email } });
-
-    // handle errors
     if (existingUser.length > 0)
       return next(new CustomError(res, `user "${email}" already exists`));
 
