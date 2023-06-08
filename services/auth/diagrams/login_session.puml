@@ -12,10 +12,10 @@ group Account Registration Request
     activate auth
     ' completed
     auth -> db : Check if email/acct exists\n(send error if not)
-    ' in progress
+    ' completed
     auth -> auth : Compare password provided with password stored in db
-    auth -> db : Create new User in DB
-    auth -> auth : Log user in. Create session\nobj. (cookie/jwt/etc)
+    ' completed
+    auth -> auth : Create session\nobj. (cookie/jwt/etc)
 
     client <- auth: Send response data\nwith session obj. (cookie/jwt/etc)
     deactivate auth
