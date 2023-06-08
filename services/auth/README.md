@@ -24,7 +24,7 @@ curl -k -d '{"email":"test@mail.com", "password":"testpassword"}' \
   -H "Content-Type: application/json" \
   -X POST https://ticketing.docker/api/users/register \
   -c $COOKIE_PATH && \
-  echo $(awk -F"session\t" 'BEGIN{ORS=""}{ print $2 }' $COOKIE_PATH)
+  echo "\nsession="$(awk -F"session\t" 'BEGIN{ORS=""}{ print $2 }' $COOKIE_PATH)
 
 ########################## REGISTER (above) ##########################
 
