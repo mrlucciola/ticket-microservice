@@ -1,13 +1,12 @@
-import { Router } from "express";
+import { Request, Response, Router } from "express";
 
 const router = Router();
 
-router.route("/users/logout").get((_req, res, next) => {
-  console.log("req logout user");
+router.post("/users/logout", (req: Request, res: Response, _next) => {
+  // delete jwt - set browser's cookie session to null
+  req.session = null;
 
-  res.status(200).send("Req to logout OK");
-
-  next();
+  res.status(200).send({});
 });
 
 export { router as routerLogout };
