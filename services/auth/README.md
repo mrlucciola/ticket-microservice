@@ -45,6 +45,14 @@ curl -k -d '{"email":"not_an_email", "password":"testpassword"}' \
   -c ./_hidden/hidden-cookie.txt
 
 ########################### LOGIN (above) ############################
+
+######################## CURRENTUSER (below) #########################
+curl -k \
+  -H "Content-Type: application/json" \
+  -X GET https://ticketing.docker/api/users/currentuser \
+  --cookie "session=eyJqd3QiOiJleUpoYkdjaU9pSklVekkxTmlJc0luUjVjQ0k2SWtwWFZDSjkuZXlKcFpDSTZJalkwT0RFMU5UbGtOamsxTnpnd1kyVTVZelV5WVdKa01pSXNJbVZ0WVdsc0lqb2lkR1Z6ZEVCdFlXbHNMbU52YlNJc0ltbGhkQ0k2TVRZNE5qRTVPRGN3TTMwLmg1MG9RWlBPaGpSb0QyeDlTanhTQV9OZ2hBOXJ0WjhzTW5fUXN3bjhHYjAifQ=="
+
+######################## CURRENTUSER (above) #########################
 ```
 
 ## ISSUES
