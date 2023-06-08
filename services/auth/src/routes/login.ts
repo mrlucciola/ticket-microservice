@@ -5,8 +5,8 @@ import jwt from "jsonwebtoken";
 import { User } from "../models/user";
 import { validateRequest } from "../middlewares/validateRequest";
 import { ReqLogin } from "../interfaces/requests";
-import { UserNotFoundError } from "../errors/userNotFoundError";
 import { Password } from "../interfaces/password";
+import { InvalidLoginError } from "../errors/InvalidLoginError";
 
 const router = Router();
 
@@ -19,13 +19,12 @@ router.post(
     const { email, password } = req.body;
 
     const existingUser = await User.findOne({ email });
-    // handle error: no user
     if (!existingUser) {
-      // @todo rename to InvalidCredentialsError
-      next(new UserNotFoundError(res));
+      // handle error: no user
+      next(new InvalidLoginError(res));
     } else if (!(await Password.compare(existingUser.password, password))) {
-      // @todo rename to InvalidCredentialsError
-      next(new UserNotFoundError(res));
+      // handle error: incorrect password
+      next(new InvalidLoginError(res));
     } else {
       // generate jwt
       const jwtUser: string = jwt.sign(
@@ -35,8 +34,11 @@ router.post(
         },
         process.env.JWT_KEY!
       );
+
       // store jwt on session
       req.session = { jwt: jwtUser };
+
+      // send response
       res.status(200).send(existingUser);
     }
   }

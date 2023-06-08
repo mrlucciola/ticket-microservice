@@ -1,9 +1,9 @@
 import { Response } from "express";
 import { EventError } from ".";
 
-export class UserNotFoundError extends EventError {
-  reason = "User not found";
-  status: number = 500;
+export class InvalidLoginError extends EventError {
+  reason = "Invalid login credentials";
+  status: number = 400;
 
   constructor(res: Response) {
     super(res);
@@ -11,6 +11,6 @@ export class UserNotFoundError extends EventError {
     this.message = this.reason;
 
     // for extending builtin
-    Object.setPrototypeOf(this, UserNotFoundError.prototype);
+    Object.setPrototypeOf(this, InvalidLoginError.prototype);
   }
 }
