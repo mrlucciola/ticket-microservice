@@ -3,10 +3,11 @@ import jwt from "jsonwebtoken";
 
 const router = Router();
 
-router.route("/users/currentuser").get((req: Request, res: Response, next) => {
+router.get("/users/currentuser", (req: Request, res: Response, next) => {
   const jwtSessionToken = req.session?.jwt;
-  if (jwtSessionToken) {
-    // handle error: check if jwt exists
+
+  if (!jwtSessionToken) {
+    // handle error: if jwt doesnt exist
     res.send({ currentUser: null });
   } else {
     // handle error: check if jwt is valid
@@ -19,7 +20,8 @@ router.route("/users/currentuser").get((req: Request, res: Response, next) => {
     }
   }
 
-  next();
+  // @todo - next() is causing an error
+  // next();
 });
 
 export { router as routerCurrentUser };
