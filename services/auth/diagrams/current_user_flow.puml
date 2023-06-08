@@ -1,0 +1,23 @@
+@startuml current-user flow
+
+autonumber
+
+actor       "React App" as client
+participant "Auth Service" as auth
+database    "MongoDB" as mongo
+
+group Account Registration Request
+    client -> auth : Send request to auth service
+
+    activate auth
+    ' in progress
+    auth -> auth : Check if req.session.jwt exists\n(send NoSessionToken error if not)
+    ' @todo
+    auth -> auth : Check if jwt is valid
+
+    ' @todo
+    client <- auth: Send response data:\njwt info payload=\n{ currentUser: { id, email } }
+    deactivate auth
+end
+
+@enduml
