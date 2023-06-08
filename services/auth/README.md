@@ -18,41 +18,59 @@ These requirements suggest that JWT (**J**SON **W**eb **T**oken)
 
 ```sh
 ########################## REGISTER (below) ##########################
+COOKIE_PATH=_hidden/hidden-cookie.txt
+
 curl -k -d '{"email":"test@mail.com", "password":"testpassword"}' \
   -H "Content-Type: application/json" \
   -X POST https://ticketing.docker/api/users/register \
-  -c ./_hidden/hidden-cookie.txt
+  -c $COOKIE_PATH && \
+  echo $(awk -F"session\t" 'BEGIN{ORS=""}{ print $2 }' $COOKIE_PATH)
 
 ########################## REGISTER (above) ##########################
 
 ########################### LOGIN (below) ############################
+# cookie is stored in shell var here
 # pass
 curl -k -d '{"email":"test@mail.com", "password":"testpassword"}' \
   -H "Content-Type: application/json" \
   -X POST https://ticketing.docker/api/users/login \
-  -c ./_hidden/hidden-cookie.txt
+  -c $COOKIE_PATH && \
+  echo "\nsession="$(awk -F"session\t" 'BEGIN{ORS=""}{ print $2 }' $COOKIE_PATH)
 
 # fail - validation - empty password
 curl -k -d '{"email":"test@mail.com", "password":""}' \
   -H "Content-Type: application/json" \
   -X POST https://ticketing.docker/api/users/login \
-  -c ./_hidden/hidden-cookie.txt
+  -c $COOKIE_PATH && \
+  echo "\n"$(awk -F"session\t" 'BEGIN{ORS=""}{ print $2 }' $COOKIE_PATH)
 
 # fail - validation - invalid email
 curl -k -d '{"email":"not_an_email", "password":"testpassword"}' \
   -H "Content-Type: application/json" \
   -X POST https://ticketing.docker/api/users/login \
-  -c ./_hidden/hidden-cookie.txt
+  -c $COOKIE_PATH
 
 ########################### LOGIN (above) ############################
 
 ######################## CURRENTUSER (below) #########################
-curl -k \
+COOKIE=$(awk -F"session\t" 'BEGIN{ORS=""}{ print $2 }' $COOKIE_PATH) && \
+  curl -k \
   -H "Content-Type: application/json" \
   -X GET https://ticketing.docker/api/users/currentuser \
-  --cookie "session=eyJqd3QiOiJleUpoYkdjaU9pSklVekkxTmlJc0luUjVjQ0k2SWtwWFZDSjkuZXlKcFpDSTZJalkwT0RFMU5UbGtOamsxTnpnd1kyVTVZelV5WVdKa01pSXNJbVZ0WVdsc0lqb2lkR1Z6ZEVCdFlXbHNMbU52YlNJc0ltbGhkQ0k2TVRZNE5qRTVPRGN3TTMwLmg1MG9RWlBPaGpSb0QyeDlTanhTQV9OZ2hBOXJ0WjhzTW5fUXN3bjhHYjAifQ=="
+  --cookie "session=$COOKIE" && \
+  echo "\nsession="$COOKIE
 
 ######################## CURRENTUSER (above) #########################
+
+########################### LOGOUT (below) ###########################
+curl -k \
+  -H "Content-Type: application/json" \
+  -X POST https://ticketing.docker/api/users/logout \
+  -c $COOKIE_PATH && \
+  echo "\nsession="$(awk -F"session\t" 'BEGIN{ORS=""}{ print $2 }' $COOKIE_PATH)
+
+########################### LOGOUT (above) ###########################
+
 ```
 
 ## ISSUES
