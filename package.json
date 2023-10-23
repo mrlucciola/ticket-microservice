@@ -7,25 +7,27 @@
     "node": ">=18.15.0",
     "yarn": "^3.5.1"
   },
+  "workspaces": [
+    "services/*"
+  ],
   "devDependencies": {
     "@types/node": "^18.16.3",
     "@yarnpkg/sdks": "^3.0.0-rc.43",
-    "axios": "^1.4.0",
     "concurrently": "^8.0.1",
     "husky": "^8.0.0",
     "ts-node": "^10.9.1",
     "tslib": "^2.5.0",
     "typescript": "^5.0.4"
   },
-  "workspaces": [
-    "services/*"
-  ],
+  "dependencies": {
+    "axios": "^1.5.1"
+  },
   "scripts": {
     "postinstall": "husky install",
     "build": "tsc -b tsconfig.json",
     "rebuild:ts": "yarn remove:ts; yarn build",
     "remove:ts": "yarn rm-services:ts",
-    "rm-services:ts": "cd services && rm -rf */dist*/",
+    "rm-services:ts": "cd services && rm -rf ./*/dist*",
     "start": "skaffold dev --no-prune=false --cache-artifacts=false",
     "info": "kubectl get services; kubectl get deployments; kubectl get pods"
   }
