@@ -22,3 +22,4 @@ yarn-error.log*
 **/*hidden*
 **/*dist*/
 **/*tsconfig.tsbuildinfo
+.husky/__pycache__
