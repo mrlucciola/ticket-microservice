@@ -12,7 +12,7 @@ interface UserModel extends mongoose.Model<UserDoc> {
 }
 
 // create schema
-const userSchema = new mongoose.Schema<UserAttrs>(
+const userSchema = new mongoose.Schema<UserDoc>(
   {
     email: {
       type: String,
