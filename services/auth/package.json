@@ -40,6 +40,14 @@
     "k:up": "kubectl apply -f \"k8s/*.yaml\"",
     "k:down": "kubectl delete -f \"k8s/*.yaml\"",
     "k:exec": "kubectl exec -it $(kubectl get pods | awk -v var=\"auth\" -F' ' '$0~var{print $1}') sh",
-    "k:restart": "kubectl rollout restart deployment auth-depl"
+    "k:restart": "kubectl rollout restart deployment auth-depl",
+    "test": "jest --watchAll --no-cache"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node",
+    "setupFilesAfterEnv": [
+      "./src/test/setup.ts"
+    ]
   }
 }
