@@ -14,7 +14,7 @@ const pw = {
 };
 
 it("Returns a 201 response on successful account registration.", async () => {
-  return request(app)
+  return await request(app)
     .post("/api/users/register")
     .send({ email: email.valid, password: pw.valid })
     .expect(201);
@@ -49,5 +49,16 @@ it("Returns a 400 with an missing email and password", async () => {
   await request(app)
     .post("/api/users/register")
     .send({ password: pw.valid })
+    .expect(400);
+});
+
+it("Disallows duplicate emails", async () => {
+  await request(app)
+    .post("/api/users/register")
+    .send({ email: email.valid, password: pw.valid })
+    .expect(201);
+  await request(app)
+    .post("/api/users/register")
+    .send({ email: email.valid, password: pw.valid })
     .expect(400);
 });
