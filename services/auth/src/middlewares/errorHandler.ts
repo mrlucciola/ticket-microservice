@@ -8,7 +8,6 @@ export const errorHandler = (
   _next: NextFunction
 ) => {
   if (err instanceof EventError) {
-    console.log(`error: ${err.name} - ${err.message}`);
     err.sendRes();
   } else {
     console.log("unhandled error:", err);
