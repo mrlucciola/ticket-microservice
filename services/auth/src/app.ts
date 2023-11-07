@@ -20,7 +20,7 @@ app.use(
     // disable encryption - we dont use encryption
     signed: false,
     // require that cookies are used over https
-    secure: true,
+    secure: process.env.NODE_ENV !== "test",
   })
 );
 
