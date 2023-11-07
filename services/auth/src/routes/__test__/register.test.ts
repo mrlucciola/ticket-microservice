@@ -1,31 +1,21 @@
 import request from "supertest";
 import { app } from "../../app";
 // local
+import { registerUser } from "./utils";
 import { email, pw } from "./defaults";
 
 it("Returns a 201 response on successful account registration.", async () => {
-  return await request(app)
-    .post("/api/users/register")
-    .send({ email: email.valid, password: pw.valid })
-    .expect(201);
+  await registerUser();
 });
 
 it("Returns a 400 with an invalid email", async () => {
-  return await request(app)
-    .post("/api/users/register")
-    .send({ email: email.invalid, password: pw.valid })
-    .expect(400);
+  await registerUser(email.invalid, pw.valid, 400);
 });
 
 it("Returns a 400 with an invalid password", async () => {
-  await request(app)
-    .post("/api/users/register")
-    .send({ email: email.valid, password: pw.invalid.lenMax })
-    .expect(400);
-  await request(app)
-    .post("/api/users/register")
-    .send({ email: email.valid, password: pw.invalid.lenMin })
-    .expect(400);
+  await registerUser(email.valid, pw.invalid.lenMax, 400);
+
+  await registerUser(email.valid, pw.invalid.lenMin, 400);
 });
 
 it("Returns a 400 with an missing email and password", async () => {
@@ -43,21 +33,14 @@ it("Returns a 400 with an missing email and password", async () => {
 });
 
 it("Disallows duplicate emails", async () => {
-  await request(app)
-    .post("/api/users/register")
-    .send({ email: email.valid, password: pw.valid })
-    .expect(201);
-  await request(app)
-    .post("/api/users/register")
-    .send({ email: email.valid, password: pw.valid })
-    .expect(400);
+  await registerUser();
+
+  await registerUser(email.valid, pw.valid, 400);
 });
 
 it("Sets a cookie after successful user-registration", async () => {
-  const res: request.Response = await request(app)
-    .post("/api/users/register")
-    .send({ email: email.valid, password: pw.valid })
-    .expect(201);
+  const cookie = await registerUser();
 
-  expect(res.get("Set-Cookie")).toBeDefined();
+  // Cookie must be defined
+  expect(cookie).toBeDefined();
 });

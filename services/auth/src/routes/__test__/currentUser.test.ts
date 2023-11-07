@@ -1,16 +1,11 @@
 import request from "supertest";
 import { app } from "../../app";
 // local
-import { email, pw } from "./defaults";
+import { email } from "./defaults";
+import { registerUser } from "./utils";
 
 it("Responds with details about current user", async () => {
-  // Create account
-  const resRegister = await request(app)
-    .post("/api/users/register")
-    .send({ email: email.valid, password: pw.valid })
-    .expect(201);
-
-  const cookie = resRegister.get("Set-Cookie");
+  const cookie = await registerUser();
 
   // Get user info
   const res: request.Response = await request(app)

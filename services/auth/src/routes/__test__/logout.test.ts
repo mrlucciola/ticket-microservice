@@ -1,14 +1,12 @@
 import request from "supertest";
 import { app } from "../../app";
 // local
+import { registerUser } from "./utils";
 import { email, pw } from "./defaults";
 
 it("Logout user successfully.", async () => {
   // Create account
-  await request(app)
-    .post("/api/users/register")
-    .send({ email: email.valid, password: pw.valid })
-    .expect(201);
+  await registerUser();
 
   // Attempt login with invalid password
   const resLogin: request.Response = await request(app)
