@@ -1,6 +1,7 @@
 import request from "supertest";
 import { app } from "../../app";
 // local
+import { registerUser } from "./utils";
 import { email, pw } from "./defaults";
 
 /**
@@ -16,10 +17,7 @@ it("Fails when email provided does not exist.", async () => {
 
 it("Fails when incorrect password is provided for valid account.", async () => {
   // Create account
-  await request(app)
-    .post("/api/users/register")
-    .send({ email: email.valid, password: pw.valid })
-    .expect(201);
+  await registerUser();
 
   // Attempt login with invalid password
   await request(app)
@@ -30,10 +28,7 @@ it("Fails when incorrect password is provided for valid account.", async () => {
 
 it("Valid login returns cookie.", async () => {
   // Create account
-  await request(app)
-    .post("/api/users/register")
-    .send({ email: email.valid, password: pw.valid })
-    .expect(201);
+  await registerUser();
 
   // Attempt login with invalid password
   const res: request.Response = await request(app)
