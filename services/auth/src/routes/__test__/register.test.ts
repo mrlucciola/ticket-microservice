@@ -1,17 +1,7 @@
 import request from "supertest";
 import { app } from "../../app";
-
-const email = {
-  valid: "test@test.org",
-  invalid: "test test",
-};
-const pw = {
-  valid: "password",
-  invalid: {
-    lenMin: "p",
-    lenMax: "a12345678901234567890",
-  },
-};
+// local
+import { email, pw } from "./defaults";
 
 it("Returns a 201 response on successful account registration.", async () => {
   return await request(app)
