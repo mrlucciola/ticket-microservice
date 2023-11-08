@@ -20,6 +20,7 @@
     "react-router-dom": "^6.18.0"
   },
   "scripts": {
-    "dev": "next"
+    "dev": "next",
+    "d:img": "docker build -t mrlucciola/client:latest -t mrlucciola/client:$npm_package_version ../ --file Dockerfile"
   }
 }
