@@ -85,4 +85,17 @@ kubectl get secrets
 kubectl describe pod <name_of_pod>
 ```
 
+### 4. Local hostname config
+
+This service is served using a `.docker`-aliased hostname.
+
+- Dev: `http://ticketing.docker`
+
+To set this up, open `/etc/hosts` with a text editor and add the following line:
+
+- `0.0.0.0 ticketing.docker`
+
+From here, you will be able to access the service thru the browser at:
+- Dev: `http://ticketing.docker`.
+
 ## ISSUES
