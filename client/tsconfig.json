@@ -14,7 +14,7 @@
     "declaration": true,
     "declarationMap": true,
     /* Bundler mode */
-    "moduleResolution": "bundler",
+    "moduleResolution": "bundler", // orig: node
     "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
@@ -43,10 +43,9 @@
     ]
   },
   "include": [
-    "src/**/*",
-    "dist/types/**/*.ts",
-    "next-env.d.ts",
-    "**/*.tsx"
+    "pages/**/*.ts*",
+    // "next-env.d.ts",
+    // "**/*.tsx"
   ],
   "exclude": [
     "node_modules",
