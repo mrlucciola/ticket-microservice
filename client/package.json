@@ -10,7 +10,8 @@
   },
   "devDependencies": {
     "@types/react": "^18.2.37",
-    "@types/react-dom": "^18.2.15"
+    "@types/react-dom": "^18.2.15",
+    "typescript": "^5.2.2"
   },
   "dependencies": {
     "next": "^14.0.1",
@@ -20,6 +21,7 @@
     "react-router-dom": "^6.18.0"
   },
   "scripts": {
+    "build:ts": "tsc -b",
     "dev": "next",
     "d:img": "docker build -t mrlucciola/client:latest -t mrlucciola/client:$npm_package_version ../ --file Dockerfile"
   }

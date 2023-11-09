@@ -2,6 +2,14 @@ apiVersion: skaffold/v4beta4
 kind: Config
 build:
   artifacts:
+    - image: mrlucciola/client
+      context: ./
+      sync:
+        manual:
+          - src: ./client/pages/*.ts*
+            dest: .
+      docker:
+        dockerfile: ./client/Dockerfile
     - image: mrlucciola/auth
       context: ./
       sync:
@@ -15,6 +23,7 @@ build:
 manifests:
   rawYaml:
     - ./k8s/*
+    - ./client/k8s/*
     - ./services/*/k8s/*
 deploy:
   kubectl: {}
