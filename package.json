@@ -30,7 +30,7 @@
     "rebuild:ts": "yarn remove:ts; yarn build",
     "remove:ts": "yarn rm-services:ts",
     "rm-services:ts": "cd services && rm -rf ./*/dist*",
-    "start": "skaffold dev --no-prune=false --cache-artifacts=false",
+    "dev": "skaffold dev --no-prune=false --cache-artifacts=false",
     "info": "kubectl get services; kubectl get deployments; kubectl get pods"
   }
 }
