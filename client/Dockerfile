@@ -7,6 +7,7 @@ ARG SRV_PATH=$SRV
 # Add the following lines
 ENV CI=true
 ENV WDS_SOCKET_PORT=0
+ENV NEXT_TELEMETRY_DISABLED 1
 
 WORKDIR /app
 
@@ -19,8 +20,8 @@ COPY .yarn/ ./.yarn
 COPY $SRV_PATH/*.json $SRV_PATH/next.config.mjs $SRV_PATH/next-env.d.ts $SRV_PATH/
 # Add app source files
 COPY $SRV_PATH/pages/* ./$SRV_PATH/pages/
-RUN mkdir -p $SRV_PATH/dist $SRV_PATH/dist.cache; touch $SRV_PATH/tsconfig.tsbuildinfo
-RUN chown -R node $SRV_PATH/tsconfig.tsbuildinfo $SRV_PATH/dist* node_modules
+RUN mkdir -p $SRV_PATH/dist; touch $SRV_PATH/tsconfig.tsbuildinfo
+RUN chown -R node $SRV_PATH/tsconfig.tsbuildinfo $SRV_PATH/dist node_modules/next
 
 # Setup yarn (Install packages if not PNP)
 RUN yarn set version 3.5.1
@@ -30,7 +31,7 @@ WORKDIR /app/$SRV_PATH
 USER node
 
 # build typescript
-RUN yarn build:ts
+RUN yarn build
 
 EXPOSE 3000
 
